@@ -1,4 +1,4 @@
-$('#submitBtn').on('click', function(event) {
+$('#submit').on('click', function(event) {
     event.preventDefault();
 
     var valid = true;
