@@ -21,13 +21,13 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 require('./app/routing/apiRoutes')(app);
 require('./app/routing/htmlRoutes')(app);
 
-// Routing
-app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, 'home.html'));
-});
-app.get('/survey', function(req, res) {
-    res.sendFile(path.join(__dirname, 'survey.html'));
-});
+// // Routing
+// app.get('/', function(req, res) {
+//     res.sendFile(path.join(__dirname, 'home.html'));
+// });
+// app.get('/survey', function(req, res) {
+//     res.sendFile(path.join(__dirname, 'survey.html'));
+// });
 
 // Start the Server
 app.listen(PORT, function() {
