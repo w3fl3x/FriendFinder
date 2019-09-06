@@ -171,7 +171,7 @@
 
         <hr>
 
-        <div id="bestFriendModal" class="modal fade" role="dialog">
+        <div id="bestFriendModal" class="modal-fade" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -180,7 +180,7 @@
                     </div>
                     <div class="modal-body">
                         <h2 id="bestFriend"></h2>
-                        <img id="bestFriendPhoto" src="#" alt="match friend photo" style="height: 250px; width: 200px">
+                        <img id="bestFriendPhoto" src="https://bloximages.chicago2.vip.townnews.com/ncnewsonline.com/content/tncms/assets/v3/editorial/5/70/570c3871-56b3-5883-b05e-f5963c507a57/54012dc24880f.image.jpg?resize=500%2C657" alt="match friend photo" style="max-width: 100%;">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -195,9 +195,77 @@
 
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script type="text/javascript" >
+    $(document).ready(function() {
+
+    var config = {
+        '.chosen-select': {},
+        '.chosen-select-deselect': {
+            allow_single_deselect: true
+        },
+        '.chosen-select-no-single': {
+            disable_search_threshold: 10
+        },
+        '.chosen-select-no-results': {
+            no_result_text: "Oops, nothing was found!"
+        },
+        '.chosen-select-width': {
+            width: '95%'
+        }
+    };
+
+    $('#submit').on('click', function(event) {
+        event.preventDefault();
+
+        function validateForm() {
+            var isValid = true;
+            $('.form-control').each(function() {
+                if ($(this).val() === '') {
+                    isValid = false;
+                }
+            });
+
+            $('.chosen-select').each(function() {
+                if ($(this).val() === '') {
+                    isValid = false;
+                }
+            });
+            return isValid;
+        }
+
+        if(validateForm()) {
+            var newUser = {
+                name: $('#name').val().trim(),
+                photo: $('#photo').val().trim(),
+                scores: [
+                    $('#q1').val(),
+                    $('#q2').val(),
+                    $('#q3').val(),
+                    $('#q4').val(),
+                    $('#q5').val(),
+                    $('#q6').val(),
+                    $('#q7').val(),
+                    $('#q8').val(),
+                    $('#q9').val(),
+                    $('#q10').val()
+                ]
+            };
+
+            // AJAX call for response after post
+            $.post('/api/friends', newUser, function(data) {
+                $('#bestFriend').text(data.name);
+                $('#bestFriendPhoto').attr('src', data.photo);
+                $('#bestFriendModal').modal('toggle');
+            });
+        }else {
+            alert('Please fill out all fields before submitting!');
+            };
+        });
+    });
+    </script>
+
 </body>
 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="/assets/javascript/app.js"></script>
 
 </html>
